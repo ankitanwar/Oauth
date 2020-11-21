@@ -1,9 +1,9 @@
 package services
 
 import (
-	accesstoken "github.com/ankitanwar/bookStore-OAuth/domain/accessToken"
-	"github.com/ankitanwar/bookStore-OAuth/repository/db"
-	"github.com/ankitanwar/bookStore-OAuth/utils/errors"
+	accesstoken "github.com/ankitanwar/OAuth/domain/accessToken"
+	"github.com/ankitanwar/OAuth/repository/db"
+	"github.com/ankitanwar/OAuth/utils/errors"
 )
 
 //Service : Interface for services

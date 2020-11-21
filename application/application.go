@@ -1,10 +1,10 @@
 package application
 
 import (
-	mongodb "github.com/ankitanwar/bookStore-OAuth/clients"
-	"github.com/ankitanwar/bookStore-OAuth/http"
-	"github.com/ankitanwar/bookStore-OAuth/repository/db"
-	"github.com/ankitanwar/bookStore-OAuth/services"
+	mongodb "github.com/ankitanwar/OAuth/clients"
+	"github.com/ankitanwar/OAuth/http"
+	"github.com/ankitanwar/OAuth/repository/db"
+	"github.com/ankitanwar/OAuth/services"
 	"github.com/gin-gonic/gin"
 )
 

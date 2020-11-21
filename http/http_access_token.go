@@ -3,8 +3,8 @@ package http
 import (
 	"net/http"
 
-	accesstoken "github.com/ankitanwar/bookStore-OAuth/domain/accessToken"
-	"github.com/ankitanwar/bookStore-OAuth/services"
+	accesstoken "github.com/ankitanwar/OAuth/domain/accessToken"
+	"github.com/ankitanwar/OAuth/services"
 	"github.com/gin-gonic/gin"
 )
 

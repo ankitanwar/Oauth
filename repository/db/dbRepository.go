@@ -1,9 +1,9 @@
 package db
 
 import (
-	mongodb "github.com/ankitanwar/bookStore-OAuth/clients"
-	accesstoken "github.com/ankitanwar/bookStore-OAuth/domain/accessToken"
-	"github.com/ankitanwar/bookStore-OAuth/utils/errors"
+	mongodb "github.com/ankitanwar/OAuth/clients"
+	accesstoken "github.com/ankitanwar/OAuth/domain/accessToken"
+	"github.com/ankitanwar/OAuth/utils/errors"
 )
 
 var collections = mongodb.Client.Database("learning").Collection("people")

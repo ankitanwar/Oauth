@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ankitanwar/bookStore-OAuth/utils/errors"
+	"github.com/ankitanwar/OAuth/utils/errors"
 )
 
 const (
