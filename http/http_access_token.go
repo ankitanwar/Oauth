@@ -44,7 +44,7 @@ func (h *accessTokenhandler) Create(c *gin.Context) {
 		return
 	}
 
-	token, err := h.service.Create(newRequest)
+	token, err := h.service.Create(*newRequest)
 	if err != nil {
 		c.JSON(err.Status, err)
 		return

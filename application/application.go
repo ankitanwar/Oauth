@@ -16,7 +16,8 @@ var (
 func StartApplication() {
 	mongodb.Ping()
 	dbRepository := db.NewRepository()
-	atService := services.NewService(dbRepository)
+	userRepository := db.NewRestRepository()
+	atService := services.NewService(dbRepository, userRepository)
 	atHandler := http.NewHandler(atService)
 	router.GET("/oauth/access_token/:access_token_id", atHandler.GetByID)
 	router.POST("/oauth/access_token", atHandler.Create)

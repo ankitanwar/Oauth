@@ -1,9 +1,11 @@
 package accesstoken
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
+	"github.com/ankitanwar/OAuth/utils/cryptoUtils"
 	"github.com/ankitanwar/OAuth/utils/errors"
 )
 
@@ -19,10 +21,15 @@ type AccessToken struct {
 	Expires     int64  `json:"expires" bson:"expires"`
 }
 
-//TokenRequest : To Request The Acees Token
-type TokenRequest struct  {
-	Email          string `json:"email"`
-	Password string `json:"password"`
+//TokenRequest : To request the new Acess Token
+type TokenRequest struct {
+	GrantType    string `json:"grant_type"`
+	Scope        string `json:"scope"`
+	UserName     string `json:"user_name"`
+	Password     string `json:"password"`
+	ClinetID     string `json:"client_id"`
+	ClinetSecret string `json:"clinet_secret"`
+
 }
 
 //Validate : To validate the Access Token
@@ -43,14 +50,21 @@ func (at *AccessToken) Validate() *errors.RestError {
 	return nil
 }
 
-//GetNewAccess : To get the new access token
-func GetNewAccess() *AccessToken {
+//GetNewAccessToken : To get the new access token
+func GetNewAccessToken(id int) *AccessToken {
 	return &AccessToken{
+		UserID:  id,
 		Expires: time.Now().UTC().Add(experationTime * time.Hour).Unix(),
 	}
+
 }
 
-//IsExpired : To Check whether the given access token is experied or not
-func (at AccessToken) IsExpired() bool {
+//IsExpired : To Check whether the givenaccess token is experied or not
+func (at *AccessToken) IsExpired() bool {
 	return time.Unix(at.Expires, 0).Before(time.Now().UTC())
+}
+
+//Generate : To Generate the new access token with md5
+func (at *AccessToken) Generate() {
+	at.AccessToken = cryptos.GetMd5(fmt.Sprintf("at-%d-%d-ran", at.UserID, at.Expires))
 }

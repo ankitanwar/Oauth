@@ -14,14 +14,30 @@ type Service interface {
 }
 
 type service struct {
-	repository db.Repository
+	restUsersRepo db.UsersRepository
+	repository    db.Repository
 }
 
 //NewService : it will return the pointer to the Service interface
-func NewService(repo db.Repository) Service {
+func NewService(repo db.Repository, usersRepo db.UsersRepository) Service {
 	return &service{
-		repository: repo,
+		restUsersRepo: usersRepo,
+		repository:    repo,
 	}
+}
+
+func (s *service) Create(request accesstoken.TokenRequest) (*accesstoken.AccessToken, *errors.RestError) {
+	user, err := s.restUsersRepo.Login(request.UserName,request.Password)
+	if err != nil {
+		return nil, err
+	}
+	token := accesstoken.GetNewAccessToken(user.ID)
+	token.Generate()
+	_,err   = s.repository.Create(*token)
+	if err != nil {
+		return nil, err
+	}
+	return token, nil
 }
 
 //GetById : To get the user buy the given id
@@ -36,19 +52,6 @@ func (s *service) GetByID(id string) (*accesstoken.AccessToken, *errors.RestErro
 	}
 	return token, nil
 
-}
-
-//Create : To create the user by id
-func (s *service) Create(at accesstoken.TokenRequest) (*accesstoken.AccessToken, *errors.RestError) 
-	err := at.Validate()
-	if err != nil {
-		return nil, err
-	}
-	token, err := s.repository.Create(at)
-	if err != nil {
-		return nil, err
-	}
-	return token, nil
 }
 
 func (s *service) UpdateExperationTime(at accesstoken.AccessToken) *errors.RestError {
