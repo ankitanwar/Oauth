@@ -38,13 +38,13 @@ func (h *accessTokenhandler) GetByID(c *gin.Context) {
 }
 
 func (h *accessTokenhandler) Create(c *gin.Context) {
-	newToken := &accesstoken.AccessToken{}
-	if err := c.ShouldBind(newToken); err != nil {
+	newRequest := &accesstoken.TokenRequest{}
+	if err := c.ShouldBind(newRequest); err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
-	token, err := h.service.Create(*newToken)
+	token, err := h.service.Create(newRequest)
 	if err != nil {
 		c.JSON(err.Status, err)
 		return

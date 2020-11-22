@@ -9,7 +9,7 @@ import (
 //Service : Interface for services
 type Service interface {
 	GetByID(string) (*accesstoken.AccessToken, *errors.RestError)
-	Create(accesstoken.AccessToken) (*accesstoken.AccessToken, *errors.RestError)
+	Create(accesstoken.TokenRequest) (*accesstoken.AccessToken, *errors.RestError)
 	UpdateExperationTime(accesstoken.AccessToken) *errors.RestError
 }
 
@@ -39,7 +39,7 @@ func (s *service) GetByID(id string) (*accesstoken.AccessToken, *errors.RestErro
 }
 
 //Create : To create the user by id
-func (s *service) Create(at accesstoken.AccessToken) (*accesstoken.AccessToken, *errors.RestError) {
+func (s *service) Create(at accesstoken.TokenRequest) (*accesstoken.AccessToken, *errors.RestError) 
 	err := at.Validate()
 	if err != nil {
 		return nil, err
