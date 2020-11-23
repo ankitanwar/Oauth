@@ -4,6 +4,7 @@ import (
 	mongodb "github.com/ankitanwar/OAuth/clients"
 	accesstoken "github.com/ankitanwar/OAuth/domain/accessToken"
 	"github.com/ankitanwar/OAuth/utils/errors"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 var collections = mongodb.Client.Database("learning").Collection("people")
@@ -26,12 +27,12 @@ func NewRepository() Repository {
 func (d *dbRepository) GetByID(ID string) (*accesstoken.AccessToken, *errors.RestError) {
 	ctx, cancel := mongodb.GetSession()
 	defer cancel()
-	result := &accesstoken.AccessToken{}
-	err := collections.FindOne(ctx, accesstoken.AccessToken{AccessToken: ID}).Decode(&result)
+	var result accesstoken.AccessToken
+	err := collections.FindOne(ctx, bson.M{"access_token": ID}).Decode(&result)
 	if err != nil {
-		return nil, errors.NewNotFound("Given ID doesnt found in the database")
+		return nil, errors.NewNotFound("Invalid Access Token")
 	}
-	return result, nil
+	return &result, nil
 }
 
 func (d *dbRepository) Create(at accesstoken.AccessToken) (*accesstoken.AccessToken, *errors.RestError) {

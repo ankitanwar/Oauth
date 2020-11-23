@@ -11,7 +11,7 @@ import (
 
 var (
 	restClinet = rest.RequestBuilder{
-		BaseURL: "https://bookstore.com",
+		BaseURL: "https://localhost:8081",
 		Timeout: 100 * time.Millisecond,
 	}
 )

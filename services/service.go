@@ -27,7 +27,7 @@ func NewService(repo db.Repository, usersRepo db.UsersRepository) Service {
 }
 
 func (s *service) Create(request accesstoken.TokenRequest) (*accesstoken.AccessToken, *errors.RestError) {
-	user, err := s.restUsersRepo.Login(request.UserName,request.Password)
+	user, err := s.restUsersRepo.Login(request.Email,request.Password)
 	if err != nil {
 		return nil, err
 	}
@@ -40,9 +40,8 @@ func (s *service) Create(request accesstoken.TokenRequest) (*accesstoken.AccessT
 	return token, nil
 }
 
-//GetById : To get the user buy the given id
+//GetById : To get the user by the given id
 func (s *service) GetByID(id string) (*accesstoken.AccessToken, *errors.RestError) {
-	//id = strings.TrimSpace(id)
 	if len(id) == 0 {
 		return nil, errors.NewBadRequest("Invalid access token id")
 	}
